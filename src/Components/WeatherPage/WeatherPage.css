@@ -32,6 +32,19 @@
   margin-top: 0.2rem;
 }
 
+.weatherSubContainer
+{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: Row;
+}
+.weatherColContainer
+{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
 .marginLeft{
   margin-left: 1rem;
 }

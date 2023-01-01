@@ -155,12 +155,22 @@ function WeatherPage() {
                 {cityNameText}, {countryNameText}
               </div>
               <div className="weather-text">{mainWeather}</div>
-              <div>Description: {description}</div>
-              <div>
-                Temperature: {minTemperature}°C ~ {maxTemperature}°C
+              <div className="weatherSubContainer">
+                <div className="weatherColContainer">
+                  <div>Description:</div>
+                  <div>Temperature:</div>
+                  <div>Humidity:</div>
+                  <div>Time:</div>
+                </div>
+                <div style={{ marginLeft: "1rem" }}>
+                  <div>{description}</div>
+                  <div>
+                    {minTemperature}°C ~ {maxTemperature}°C
+                  </div>
+                  <div>{humidity}%</div>
+                  <div>{time}</div>
+                </div>
               </div>
-              <div>Humidity: {humidity}%</div>
-              <div>Time: {time}</div>
             </div>
           )}
         </div>
