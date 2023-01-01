@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 0.5rem;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid #494949;
+  }
+
+  .timeText{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .button {
+    margin-left: "1rem";
+    background-color: #EDEDED;
+    border-radius: 100%;
+  }
+
+  .button img{
+    padding: 0.5rem;
+    width: 1rem;
+    aspect-ratio: 1 / 1;
+  }
+
+
+  .leftContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    width: 90%
+  }
+
+  .rightContainer {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+        justify-content: center;
+    }
+    .leftContainer {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+        width: 100%
+      }
+    .rightContainer {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 1rem;
+      }
+  }
