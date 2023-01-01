@@ -11,7 +11,8 @@ function WeatherPage() {
   const [currentWeatherData, setCurrentWeatherData] = useState({});
 
   const [mainWeather, setMainWeather] = useState("");
-  const [temperature, setTemperature] = useState("");
+  const [minTemperature, setMinTemperature] = useState("");
+  const [maxTemperature, setMaxTemperature] = useState("");
   const [description, setDescription] = useState("");
   const [humidity, setHumidity] = useState("");
   const [time, setTime] = useState("");
@@ -27,8 +28,8 @@ function WeatherPage() {
     let date,
       formattedDate,
       formattedTime,
-      responseDataCountryName,
-      responseDataCityName;
+      searchCountryName,
+      searchDataCityName;
 
     setSearchErrorStatus(false);
     fetch(fetchUrl + "?q=" + stringData + "&appid=" + apiKey, {
@@ -42,30 +43,36 @@ function WeatherPage() {
           formattedDate = unixToDate(date, true);
           formattedTime = unixToDate(date, false);
           setTime(formattedDate);
-          if (cityName !== "") {
-            responseDataCityName = cityName;
+
+          if (data.sys.country) {
+            searchCountryName = data.sys.country;
+            setCountryNameText(data.sys.country);
           } else {
-            responseDataCityName = data.name;
+            searchCountryName = countryName.toUpperCase();
+            setCountryNameText(countryName.toUpperCase());
           }
 
-          if (countryName !== "") {
-            responseDataCountryName = countryName.toUpperCase();
+          if (data.name) {
+            searchDataCityName = data.name;
+            setCityNameText(data.name);
           } else {
-            responseDataCountryName = data.sys.country;
+            searchDataCityName = cityName;
+            setCityNameText(searchDataCityName);
           }
+
           currentSearchHistory.push({
-            city: responseDataCityName,
-            country: responseDataCountryName,
+            city: searchDataCityName,
+            country: searchCountryName,
             time: formattedTime,
           });
-          setCountryNameText(responseDataCountryName);
-          setCityNameText(responseDataCityName);
+
           setSearchHistory(currentSearchHistory);
           setShowSearchHistory(true);
           setMainWeather(data.weather[0].main);
           setDescription(data.weather[0].description);
           setHumidity(data.main.humidity);
-          setTemperature(data.main.temp);
+          setMinTemperature(data.main.temp_min);
+          setMaxTemperature(data.main.temp_max);
         } else {
           setCurrentWeatherData({});
           setSearchErrorStatus(true);
@@ -149,8 +156,10 @@ function WeatherPage() {
               </div>
               <div className="weather-text">{mainWeather}</div>
               <div>Description: {description}</div>
-              <div>Temperature: {temperature}</div>
-              <div>Humidity: {humidity}</div>
+              <div>
+                Temperature: {minTemperature}°C ~ {maxTemperature}°C
+              </div>
+              <div>Humidity: {humidity}%</div>
               <div>Time: {time}</div>
             </div>
           )}
@@ -160,13 +169,15 @@ function WeatherPage() {
         <div className="App-header">
           <div className="headerText">Search history</div>
         </div>
-        {showSearchHistory !== [] && (
-          <SearchHistory
-            newSearchHistory={searchHistory}
-            searchButtonClick={handleSearchPastHistory}
-            deleteButtonClick={handleDeleteHistory}
-          />
-        )}
+        <div style={{ marginTop: "2rem" }}>
+          {showSearchHistory !== [] && (
+            <SearchHistory
+              newSearchHistory={searchHistory}
+              searchButtonClick={handleSearchPastHistory}
+              deleteButtonClick={handleDeleteHistory}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
